@@ -1,7 +1,7 @@
 /* Structural checks on index.html: anchors resolve, filters cover categories,
    every section is present, no external render assets are referenced. */
 
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 const html = readFileSync("index.html", "utf8");
 const failures = [];
@@ -104,8 +104,28 @@ for (let n = 1; n <= 9; n++) {
 assert(html.includes('class="site-footer"'), "missing footer");
 assert(html.includes("© 2026"), "missing footer copyright");
 
-/* No external render assets (frames stay the only imagery). */
-assert(!/<img[\s>]/i.test(html), "raw <img> elements are not allowed");
+/* Self-hosted logo images only — every box logo must exist on disk. */
+const imgs = [...html.matchAll(/<img\b[^>]*>/g)].map((m) => m[0]);
+assert(
+  imgs.length === 12,
+  `expected exactly 12 logo images (one per tech box), found ${imgs.length}`
+);
+for (const tag of imgs) {
+  const src = /src="([^"]+)"/.exec(tag)?.[1] ?? "";
+  const alt = /alt="([^"]*)"/.exec(tag)?.[1] ?? "";
+  assert(src.startsWith("/logos/"), `logo src must be self-hosted: ${src}`);
+  assert(alt.length > 0, `logo missing alt text: ${src}`);
+  assert(/width="44"/.test(tag), `logo missing width: ${src}`);
+  assert(/height="44"/.test(tag), `logo missing height: ${src}`);
+  const file = `public${src}`;
+  assert(existsSync(file), `logo file missing on disk: ${file}`);
+}
+
+/* No external render assets otherwise (frames stay the only imagery). */
+assert(
+  !/<script[^>]+src="https?:/i.test(html),
+  "external scripts are not allowed"
+);
 assert(
   !/<link[^>]+(stylesheet|font)/i.test(html),
   "external stylesheets/fonts are not allowed"
