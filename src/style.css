@@ -1,0 +1,42 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #000000;
+}
+
+/* Scroll distance that drives the 240-frame sequence. */
+#video-scroll {
+  position: relative;
+  height: 500vh;
+  background: #000000;
+}
+
+/* Pinned fullscreen stage pinned inside the scroll section. */
+#video-scroll .stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #000000;
+}
+
+#canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  background: #000000;
+}
+
+/* Reduced motion: no scroll animation, single static frame. */
+html.reduced-motion #video-scroll {
+  height: 100vh;
+}
