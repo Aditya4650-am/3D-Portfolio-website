@@ -18,11 +18,12 @@ body {
   background: #000000;
 }
 
-/* Pinned fullscreen stage pinned inside the scroll section. */
+/* Sticky fullscreen stage: covers the viewport for the entire scroll,
+   so the sequence ends exactly on frame 240 at the bottom of the page —
+   no black section is left to scroll through afterwards. */
 #video-scroll .stage {
-  position: absolute;
+  position: sticky;
   top: 0;
-  left: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;

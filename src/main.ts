@@ -224,7 +224,9 @@ function initCinematicScroll(): void {
   });
   gsap.ticker.lagSmoothing(0);
 
-  /* Scroll position → progress → frame number → canvas image. */
+  /* Scroll position → progress → frame number → canvas image.
+     The stage is CSS-sticky, so it covers the viewport for the whole
+     scrub range; the page ends exactly when frame 240 is reached. */
   gsap.to(frameState, {
     frame: FRAME_COUNT - 1,
     ease: "none", // scroll position itself controls the motion
@@ -233,8 +235,6 @@ function initCinematicScroll(): void {
       start: "top top",
       end: "bottom bottom",
       scrub: true,
-      pin: true,
-      anticipatePin: 1,
       invalidateOnRefresh: true,
     },
     onUpdate: () => renderFrame(),
