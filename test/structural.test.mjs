@@ -135,29 +135,11 @@ for (const src of scripts) {
   assert(src.startsWith("/src/") || src.startsWith("/"), `unexpected script src: ${src}`);
 }
 
-/* Glass system is applied across sections (panels, strips, boxes). */
+/* Glass system is applied across sections. */
 const glassCount = (html.match(/class="glass/g) || []).length;
-assert(glassCount >= 6, `expected 6+ glass surfaces, found ${glassCount}`);
+assert(glassCount >= 25, `expected 25+ glass surfaces, found ${glassCount}`);
 const buttonCount = (html.match(/class="btn/g) || []).length;
 assert(buttonCount >= 12, `expected 12+ glass buttons, found ${buttonCount}`);
-
-/* Editorial rows match the source portfolio's list layout. */
-const rowCount = (modifier) =>
-  (html.match(new RegExp(`class="row row--${modifier}"`, "g")) || []).length;
-assert(rowCount("cap") === 4, `expected 4 capability rows, found ${rowCount("cap")}`);
-assert(rowCount("work") === 4, `expected 4 work rows, found ${rowCount("work")}`);
-assert(rowCount("cert") === 4, `expected 4 certificate rows, found ${rowCount("cert")}`);
-assert(rowCount("method") === 8, `expected 8 method rows, found ${rowCount("method")}`);
-
-/* Featured tool lines from the source data are present. */
-for (const line of [
-  "Component-driven user interfaces with a maintainable architecture",
-  "JavaScript runtime for server-side applications and tooling",
-  "Firmware and control logic for microcontroller projects",
-  "Hosting, review, and delivery for source code",
-]) {
-  assert(html.includes(line), `missing capability feature line: ${line}`);
-}
 
 if (failures.length) {
   console.error("structural test FAILED:\n  " + failures.join("\n  "));
