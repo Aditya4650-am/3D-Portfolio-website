@@ -322,7 +322,9 @@ function initCinematicScroll(): void {
   });
 
   /* Subtle glass entrance reveals (transform/opacity only — no reflow). */
-  const revealTargets = gsap.utils.toArray<HTMLElement>(".card, .panel");
+  const revealTargets = gsap.utils.toArray<HTMLElement>(
+    ".panel, .strip, .feature-block, .row"
+  );
   gsap.set(revealTargets, { autoAlpha: 0, y: 28 });
   ScrollTrigger.batch(revealTargets, {
     start: "top 88%",
