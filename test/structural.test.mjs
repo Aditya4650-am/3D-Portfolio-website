@@ -63,6 +63,35 @@ for (const key of [
   assert(html.includes(key), `missing portfolio data: ${key}`);
 }
 
+/* Every toolkit tool appears in its own 3D box. */
+const TOOLS = [
+  "React.js",
+  "Next.js",
+  "Tailwind CSS",
+  "HTML5",
+  "Node.js",
+  "PostgreSQL",
+  "Vercel",
+  "Firebase",
+  "Arduino",
+  "GitHub",
+  "JavaScript",
+  "CSS3",
+];
+for (const tool of TOOLS) {
+  assert(html.includes(tool), `missing toolkit tool: ${tool}`);
+}
+const techBoxCount = (html.match(/class="tech-box"/g) || []).length;
+assert(
+  techBoxCount === TOOLS.length,
+  `expected ${TOOLS.length} 3D tech boxes, found ${techBoxCount}`
+);
+const miniBoxLists = (html.match(/chips chips--3d/g) || []).length;
+assert(
+  miniBoxLists === 4,
+  `expected 4 capability stacks as mini 3D boxes, found ${miniBoxLists}`
+);
+
 /* Structure: canvas stage, numbered sections 01–09, footer. */
 assert(html.includes('id="canvas"'), "missing canvas");
 assert(html.includes('id="video-scroll"'), "missing scroll section");

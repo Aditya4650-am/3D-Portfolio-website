@@ -459,9 +459,13 @@ h3 {
     border-color 0.3s ease;
 }
 
-.chips--lg li {
-  padding: 10px 20px;
-  font-size: 0.92rem;
+/* Mini 3D boxes for the capability stacks. */
+.chips--3d {
+  perspective: 620px;
+}
+
+.chips--3d li {
+  transform: rotateX(8deg);
 }
 
 @media (hover: hover) {
@@ -469,6 +473,119 @@ h3 {
     transform: translateY(-2px);
     background: rgba(255, 255, 255, 0.12);
     border-color: rgba(255, 255, 255, 0.26);
+  }
+
+  .chips--3d li:hover {
+    transform: rotateX(0deg) translateY(-3px);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Tech stack — 3D boxes                                               */
+/* ------------------------------------------------------------------ */
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(158px, 1fr));
+  gap: clamp(16px, 2.4vw, 26px);
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+  perspective: 1100px;
+}
+
+/* Glass slab resting at an angle; the offset back plate sits deeper in Z,
+   so the perspective reveal reads as a real three-dimensional box. */
+.tech-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 104px;
+  padding: 18px 14px;
+  border-radius: 18px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.13) 0%,
+    rgba(255, 255, 255, 0.055) 45%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+  box-shadow:
+    0 22px 44px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+  transform-style: preserve-3d;
+  transform: rotateX(9deg) rotateY(-7deg);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.45s ease;
+  will-change: transform;
+}
+
+/* Back plate — separated in Z to create genuine box depth. */
+.tech-box::before {
+  content: "";
+  position: absolute;
+  inset: 12px -12px -12px 12px;
+  border-radius: 18px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.015)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transform: translateZ(-20px);
+  box-shadow: 0 26px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Specular sheen on the front face. */
+.tech-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    120% 90% at 14% 0%,
+    rgba(255, 255, 255, 0.11) 0%,
+    rgba(255, 255, 255, 0) 55%
+  );
+  pointer-events: none;
+}
+
+.tech-box span {
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover: hover) {
+  .tech-box:hover {
+    transform: rotateX(0deg) rotateY(5deg) translateZ(14px) translateY(-6px);
+    border-color: rgba(255, 255, 255, 0.32);
+    box-shadow:
+      0 34px 70px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.26),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+  }
+}
+
+@media (max-width: 640px) {
+  .tech-grid {
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    gap: 14px;
+  }
+
+  .tech-box {
+    min-height: 88px;
+    transform: rotateX(7deg) rotateY(-5deg);
   }
 }
 
