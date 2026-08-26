@@ -12,12 +12,6 @@ const FRAME_COUNT = 240;
 const FRAME_URL = (index: number) =>
   `/frames/frame_${String(index + 1).padStart(6, "0")}.webp`;
 
-/* Frame pacing: the first phase covers most of the sequence during the
-   pure-cinematic intro, the second phase keeps the background slowly
-   moving while the glass sections scroll over it. */
-const PHASE_ONE_FRAMES = 199; // frames 1–200
-const PHASE_ONE_SHARE = 0.4; // first 40% of the page scroll
-
 const CONTACT_EMAIL = "adityamands@gmail.com";
 
 const section = document.getElementById("video-scroll") as HTMLElement;
@@ -251,17 +245,20 @@ function wireUI(lenis: Lenis | null): void {
       form.reportValidity();
       return;
     }
-    const data = new FormData(form);
-    const subject = encodeURIComponent(
-      `Project enquiry — ${String(data.get("type") ?? "New project")}`
-    );
-    const body = encodeURIComponent(
-      `Name: ${String(data.get("name") ?? "")}\n` +
-        `Email: ${String(data.get("email") ?? "")}\n\n` +
-        `${String(data.get("message") ?? "")}`
-    );
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    window.location.href = buildMailtoUrl(new FormData(form));
   });
+}
+
+export function buildMailtoUrl(data: FormData): string {
+  const subject = encodeURIComponent(
+    `Project enquiry — ${String(data.get("type") ?? "New project")}`
+  );
+  const body = encodeURIComponent(
+    `Name: ${String(data.get("name") ?? "")}\n` +
+      `Email: ${String(data.get("email") ?? "")}\n\n` +
+      `${String(data.get("message") ?? "")}`
+  );
+  return `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -280,6 +277,11 @@ async function initReducedMotion(): Promise<void> {
     frameState.frame = 0;
     renderFrame(true);
   }
+  /* Responsive resize: re-measure and repaint the static frame. */
+  window.addEventListener("resize", () => {
+    sizeCanvas();
+    renderFrame(true);
+  });
 }
 
 /* ------------------------------------------------------------------ */
@@ -303,11 +305,12 @@ function initCinematicScroll(): void {
   wireUI(lenis);
 
   /* Scroll position → progress → frame number → canvas image.
-     The stage is CSS-sticky, so the frames stay behind every glass
-     section; the sequence keeps advancing until the page ends on
-     frame 240. */
-  const tl = gsap.timeline({
-    defaults: { ease: "none" }, // scroll position itself controls the motion
+     The hero sits on frame 1, the footer lands on frame 240, and the
+     sequence advances linearly across every section in between. The
+     stage is CSS-sticky, so the frames stay behind every glass panel. */
+  gsap.to(frameState, {
+    frame: FRAME_COUNT - 1,
+    ease: "none", // scroll position itself controls the motion
     scrollTrigger: {
       trigger: section,
       start: "top top",
@@ -318,10 +321,22 @@ function initCinematicScroll(): void {
     onUpdate: () => renderFrame(),
   });
 
-  tl.to(frameState, { frame: PHASE_ONE_FRAMES, duration: PHASE_ONE_SHARE }).to(
-    frameState,
-    { frame: FRAME_COUNT - 1, duration: 1 - PHASE_ONE_SHARE }
-  );
+  /* Subtle glass entrance reveals (transform/opacity only — no reflow). */
+  const revealTargets = gsap.utils.toArray<HTMLElement>(".card, .panel");
+  gsap.set(revealTargets, { autoAlpha: 0, y: 28 });
+  ScrollTrigger.batch(revealTargets, {
+    start: "top 88%",
+    once: true,
+    onEnter: (batch) =>
+      gsap.to(batch, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.08,
+        ease: "power2.out",
+        overwrite: true,
+      }),
+  });
 
   /* Paint the very first frame as soon as it is available, then
      progressively load the rest without blocking the page. */
