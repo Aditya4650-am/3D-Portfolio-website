@@ -4,13 +4,473 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
-    <title>3D Portfolio — Cinematic Scroll</title>
+    <meta
+      name="description"
+      content="Aditya Mandwal — Web Developer at AM CREATOR. Responsive web applications and IoT solutions."
+    />
+    <title>Aditya Mandwal | Web Developer | AM CREATOR</title>
     <style>html { background: #000; }</style>
   </head>
   <body>
     <section id="video-scroll">
       <div class="stage">
         <canvas id="canvas" aria-label="Scroll-controlled cinematic animation"></canvas>
+      </div>
+
+      <div class="content">
+        <!-- Pure frame-animation intro before the first section -->
+        <div class="intro" aria-hidden="true"></div>
+
+        <header class="site-header">
+          <a class="brand" href="#top">AM CREATOR · Web Developer</a>
+          <nav class="site-nav" aria-label="Sections">
+            <a href="#profile">Profile</a>
+            <a href="#projects">Work</a>
+            <a href="#contact">Contact</a>
+          </nav>
+        </header>
+
+        <main id="top">
+          <!-- 00 · Hero -->
+          <section class="sec hero" aria-labelledby="hero-title">
+            <div class="glass hero-panel">
+              <p class="eyebrow">AM CREATOR · Web Developer</p>
+              <h1 id="hero-title">Aditya&nbsp;Mandwal</h1>
+              <p class="tagline">Innovating Web Solutions</p>
+              <p class="lede">
+                Responsive web applications and IoT solutions — built to turn
+                ideas into scalable, user-friendly digital experiences.
+              </p>
+              <div class="actions">
+                <a class="btn btn--primary" href="#projects">Selected work</a>
+                <a class="btn" href="#contact">Start a project</a>
+              </div>
+            </div>
+          </section>
+
+          <!-- 01 · Profile -->
+          <section id="profile" class="sec" aria-labelledby="about-title">
+            <div class="glass panel">
+              <p class="label">01 · Profile</p>
+              <h2 id="about-title">About</h2>
+              <p class="strong-line">Building technology with purpose.</p>
+              <div class="about-grid">
+                <h3>Build.Create.Innovate.</h3>
+                <p>
+                  I am a passionate Web Developer with expertise in creating
+                  responsive web applications and IoT solutions. With a strong
+                  foundation in both frontend and backend technologies, I build
+                  scalable and user-friendly applications that solve real-world
+                  problems.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- 02 · Numbers -->
+          <section class="sec" aria-labelledby="numbers-title">
+            <p class="label">02 · Numbers</p>
+            <h2 id="numbers-title">At a glance</h2>
+            <div class="grid grid-4">
+              <div class="glass card stat">
+                <p class="stat-value">100%</p>
+                <h3>Dedication</h3>
+                <p class="muted">
+                  Committed delivery on every brief, from first sketch to final
+                  deploy.
+                </p>
+              </div>
+              <div class="glass card stat">
+                <p class="stat-value">15+</p>
+                <h3>Projects</h3>
+                <p class="muted">
+                  Shipped web applications and IoT builds across product and
+                  hardware.
+                </p>
+              </div>
+              <div class="glass card stat">
+                <p class="stat-value">1+</p>
+                <h3>Years</h3>
+                <p class="muted">
+                  Hands-on practice across web applications and connected
+                  devices.
+                </p>
+              </div>
+              <div class="glass card stat">
+                <p class="stat-value">10+</p>
+                <h3>Clients</h3>
+                <p class="muted">
+                  Collaborations focused on clear outcomes and dependable
+                  communication.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- 03 · Capabilities -->
+          <section class="sec" aria-labelledby="stack-title">
+            <p class="label">03 · Capabilities</p>
+            <h2 id="stack-title">Stack</h2>
+            <p class="lede">
+              Web, data, hardware, and the tools used to ship them.
+            </p>
+            <div class="grid grid-2">
+              <div class="glass card cap">
+                <p class="num">01</p>
+                <h3>Web Development</h3>
+                <p class="muted">
+                  Interfaces and applications that stay fast, accessible, and
+                  visually precise.
+                </p>
+                <ul class="chips">
+                  <li>React</li>
+                  <li>Next.js</li>
+                  <li>Tailwind CSS</li>
+                  <li>HTML5</li>
+                  <li>CSS3</li>
+                  <li>JavaScript</li>
+                </ul>
+              </div>
+              <div class="glass card cap">
+                <p class="num">02</p>
+                <h3>Programming &amp; Database</h3>
+                <p class="muted">
+                  Services and data layers that keep products reliable as they
+                  grow.
+                </p>
+                <ul class="chips">
+                  <li>Node.js</li>
+                  <li>Express</li>
+                  <li>PostgreSQL</li>
+                  <li>Firebase</li>
+                  <li>REST APIs</li>
+                </ul>
+              </div>
+              <div class="glass card cap">
+                <p class="num">03</p>
+                <h3>IoT &amp; Arduino</h3>
+                <p class="muted">
+                  Hardware and software working together in the physical world.
+                </p>
+                <ul class="chips">
+                  <li>Arduino Programming</li>
+                  <li>Sensor Integration</li>
+                  <li>Hardware Projects</li>
+                  <li>IoT Solutions</li>
+                </ul>
+              </div>
+              <div class="glass card cap">
+                <p class="num">04</p>
+                <h3>Tools &amp; Technologies</h3>
+                <p class="muted">
+                  The everyday stack used to design, ship, and operate
+                  software.
+                </p>
+                <ul class="chips">
+                  <li>GitHub</li>
+                  <li>VS Code</li>
+                  <li>Figma</li>
+                  <li>AWS</li>
+                  <li>Vercel</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- 04 · Toolkit -->
+          <section class="sec" aria-labelledby="toolkit-title">
+            <div class="glass panel">
+              <p class="label">04 · Toolkit</p>
+              <h2 id="toolkit-title">Tech Stack &amp; Tool</h2>
+              <p class="lede">
+                The languages, platforms, and hardware used to ship the work.
+              </p>
+              <ul class="chips chips--lg">
+                <li>React.js</li>
+                <li>Next.js</li>
+                <li>Tailwind CSS</li>
+                <li>HTML5</li>
+                <li>Node.js</li>
+                <li>PostgreSQL</li>
+                <li>Vercel</li>
+                <li>Firebase</li>
+                <li>Arduino</li>
+                <li>GitHub</li>
+                <li>JavaScript</li>
+                <li>CSS3</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- 05 · Portfolio -->
+          <section id="projects" class="sec" aria-labelledby="work-title">
+            <p class="label">05 · Portfolio</p>
+            <h2 id="work-title">Selected work</h2>
+            <p class="lede">
+              Turning ideas into functional digital experiences.
+            </p>
+            <div class="filters" role="group" aria-label="Filter projects">
+              <button class="btn btn--filter is-active" data-filter="all" type="button">All</button>
+              <button class="btn btn--filter" data-filter="web" type="button">Web</button>
+              <button class="btn btn--filter" data-filter="iot" type="button">IoT</button>
+              <button class="btn btn--filter" data-filter="arduino" type="button">Arduino</button>
+              <button class="btn btn--filter" data-filter="other" type="button">Other</button>
+            </div>
+            <div class="grid grid-2" id="work-grid">
+              <article class="glass card project" data-cat="iot arduino">
+                <p class="meta">01 / IoT &amp; Hardware</p>
+                <h3>IoT-Based Arduino Projects</h3>
+                <p class="muted">
+                  Developed IoT applications using Arduino to remotely monitor
+                  and control systems with real-time data tracking.
+                </p>
+                <ul class="chips">
+                  <li>Arduino</li>
+                  <li>IoT</li>
+                  <li>Sensors</li>
+                  <li>Real-time Data</li>
+                </ul>
+              </article>
+              <article class="glass card project" data-cat="web">
+                <p class="meta">02 / Web Development</p>
+                <h3>Web Development Project</h3>
+                <p class="muted">
+                  Created a responsive full-stack web application with
+                  authentication, database integration, and modern UI.
+                </p>
+                <ul class="chips">
+                  <li>Authentication</li>
+                  <li>Database</li>
+                  <li>Modern UI</li>
+                </ul>
+              </article>
+              <article class="glass card project" data-cat="other">
+                <p class="meta">03 / Showcase</p>
+                <h3>Tech Fest Demonstration</h3>
+                <p class="muted">
+                  Successfully demonstrated IoT and web projects at college
+                  tech fest, showcasing innovative solutions.
+                </p>
+                <ul class="chips">
+                  <li>IoT</li>
+                  <li>Web</li>
+                  <li>Live Demo</li>
+                </ul>
+              </article>
+              <article class="glass card project" data-cat="web">
+                <p class="meta">04 / Web Development</p>
+                <h3>Ai Web Tech</h3>
+                <p class="muted">A web project under the name Ai Web Tech.</p>
+                <ul class="chips">
+                  <li>OpenAI</li>
+                  <li>Claude</li>
+                  <li>AI Agent</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <!-- 06 · Credentials -->
+          <section class="sec" aria-labelledby="certs-title">
+            <p class="label">06 · Credentials</p>
+            <h2 id="certs-title">Certificates</h2>
+            <p class="lede">Courses completed and competition recognitions.</p>
+            <div class="grid grid-2">
+              <div class="glass card cert">
+                <p class="kicker">Competition · Aavishkar</p>
+                <h3>Aavishkar District Level</h3>
+                <p class="badge">3rd Rank</p>
+              </div>
+              <div class="glass card cert">
+                <p class="kicker">Course · Udemy</p>
+                <h3>Full Stack Development</h3>
+              </div>
+              <div class="glass card cert">
+                <p class="kicker">Course · Udemy</p>
+                <h3>Shell Script</h3>
+              </div>
+              <div class="glass card cert">
+                <p class="kicker">Competition · Aavishkar</p>
+                <h3>Aavishkar University Level</h3>
+              </div>
+            </div>
+          </section>
+
+          <!-- 07 · Practice -->
+          <section class="sec" aria-labelledby="rewards-title">
+            <p class="label">07 · Practice</p>
+            <h2 id="rewards-title">Rewards</h2>
+            <p class="lede">Commitment, delivery, and the craft of building.</p>
+            <div class="glass card reward-feature">
+              <h3>Web Dev</h3>
+              <p class="muted">From concept to code, I turn ideas into reality.</p>
+            </div>
+            <div class="grid grid-4">
+              <div class="glass card stat">
+                <p class="stat-value">100%</p>
+                <h3>Dedication</h3>
+                <p class="muted">
+                  Full commitment to quality, reliability, and follow-through.
+                </p>
+              </div>
+              <div class="glass card stat">
+                <p class="stat-value">15+</p>
+                <h3>Project Builder</h3>
+                <p class="muted">
+                  Web and IoT work delivered from idea to working product.
+                </p>
+              </div>
+              <div class="glass card stat">
+                <p class="stat-value">1+</p>
+                <h3>Experience</h3>
+                <p class="muted">
+                  Years building web applications and hardware solutions.
+                </p>
+              </div>
+              <div class="glass card stat">
+                <p class="stat-value">10+</p>
+                <h3>Client Impact</h3>
+                <p class="muted">
+                  Partnerships that turn practical problems into usable
+                  software.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- 08 · Method -->
+          <section class="sec" aria-labelledby="method-title">
+            <p class="label">08 · Method</p>
+            <h2 id="method-title">How I work</h2>
+            <p class="lede">From first conversation to long-term support.</p>
+            <div class="grid grid-4">
+              <div class="glass card step">
+                <p class="num">01</p>
+                <h3>Discover</h3>
+                <p class="muted">
+                  Understand the idea, the constraint, and the person it needs
+                  to serve.
+                </p>
+              </div>
+              <div class="glass card step">
+                <p class="num">02</p>
+                <h3>Plan</h3>
+                <p class="muted">
+                  Shape architecture and experience before a single line is
+                  rushed.
+                </p>
+              </div>
+              <div class="glass card step">
+                <p class="num">03</p>
+                <h3>Design</h3>
+                <p class="muted">
+                  Define the interface, hierarchy, and the feeling of the
+                  product.
+                </p>
+              </div>
+              <div class="glass card step">
+                <p class="num">04</p>
+                <h3>Develop</h3>
+                <p class="muted">
+                  Build the solution with clean structure and deliberate
+                  interfaces.
+                </p>
+              </div>
+              <div class="glass card step">
+                <p class="num">05</p>
+                <h3>Test</h3>
+                <p class="muted">
+                  Improve reliability and performance until the product feels
+                  inevitable.
+                </p>
+              </div>
+              <div class="glass card step">
+                <p class="num">06</p>
+                <h3>Deploy</h3>
+                <p class="muted">
+                  Launch the final product with a path that is stable and
+                  repeatable.
+                </p>
+              </div>
+              <div class="glass card step">
+                <p class="num">07</p>
+                <h3>Improve</h3>
+                <p class="muted">
+                  Continuously optimize after launch — products are never
+                  finished, only shipped.
+                </p>
+              </div>
+              <div class="glass card step">
+                <p class="num">08</p>
+                <h3>Support</h3>
+                <p class="muted">
+                  Stay present after launch — questions, fixes, and the next
+                  honest iteration.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- 09 · Contact -->
+          <section id="contact" class="sec sec--last" aria-labelledby="contact-title">
+            <div class="glass panel contact-panel">
+              <p class="label">09 · Contact</p>
+              <h2 id="contact-title">Let's talk.</h2>
+              <p class="lede">
+                Have a project in mind? Write with a few details — the form
+                opens your email.
+              </p>
+              <ul class="contact-lines">
+                <li>
+                  <span class="kicker">Email</span>
+                  <a href="mailto:adityamands@gmail.com">adityamands@gmail.com</a>
+                </li>
+                <li>
+                  <span class="kicker">Phone</span>
+                  <a href="tel:+919112870744">+91 9112870744</a>
+                </li>
+              </ul>
+              <div class="actions">
+                <a class="btn btn--primary" href="mailto:adityamands@gmail.com">Email me</a>
+                <a class="btn" href="https://wa.me/919112870744" target="_blank" rel="noopener">WhatsApp</a>
+              </div>
+              <form id="contact-form" class="form" novalidate>
+                <div class="form-row">
+                  <label>
+                    <span>Name</span>
+                    <input type="text" name="name" autocomplete="name" required />
+                  </label>
+                  <label>
+                    <span>Email</span>
+                    <input type="email" name="email" autocomplete="email" required />
+                  </label>
+                </div>
+                <label>
+                  <span>Project Type</span>
+                  <select name="type">
+                    <option value="Web Application">Web Application</option>
+                    <option value="IoT / Arduino">IoT / Arduino</option>
+                    <option value="Collaboration">Collaboration</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </label>
+                <label>
+                  <span>Message</span>
+                  <textarea name="message" rows="4" required></textarea>
+                </label>
+                <button class="btn btn--primary" type="submit">Send message</button>
+              </form>
+              <nav class="socials" aria-label="Social links">
+                <a class="btn btn--small" href="https://wa.me/919112870744" target="_blank" rel="noopener">WhatsApp</a>
+                <a class="btn btn--small" href="https://github.com/Aditya4650-am" target="_blank" rel="noopener">GitHub</a>
+                <a class="btn btn--small" href="mailto:adityamands@gmail.com">Email</a>
+              </nav>
+              <a class="whatsapp-line" href="https://wa.me/919112870744" target="_blank" rel="noopener">
+                Let's chat on WhatsApp
+              </a>
+            </div>
+          </section>
+        </main>
       </div>
     </section>
     <script type="module" src="/src/main.ts"></script>

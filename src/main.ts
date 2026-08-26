@@ -12,6 +12,14 @@ const FRAME_COUNT = 240;
 const FRAME_URL = (index: number) =>
   `/frames/frame_${String(index + 1).padStart(6, "0")}.webp`;
 
+/* Frame pacing: the first phase covers most of the sequence during the
+   pure-cinematic intro, the second phase keeps the background slowly
+   moving while the glass sections scroll over it. */
+const PHASE_ONE_FRAMES = 199; // frames 1–200
+const PHASE_ONE_SHARE = 0.4; // first 40% of the page scroll
+
+const CONTACT_EMAIL = "adityamands@gmail.com";
+
 const section = document.getElementById("video-scroll") as HTMLElement;
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d", { alpha: false }) as CanvasRenderingContext2D;
@@ -190,6 +198,73 @@ async function preloadFrames(
 }
 
 /* ------------------------------------------------------------------ */
+/* UI wiring — smooth anchors, project filters, contact form           */
+/* ------------------------------------------------------------------ */
+
+function wireUI(lenis: Lenis | null): void {
+  /* Smooth-scroll anchor links through Lenis. */
+  document
+    .querySelectorAll<HTMLAnchorElement>('a[href^="#"]')
+    .forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const id = link.getAttribute("href")?.slice(1);
+        const target = id ? document.getElementById(id) : null;
+        if (!target) return;
+        event.preventDefault();
+        if (lenis) {
+          lenis.scrollTo(target, { offset: -80 });
+        } else {
+          target.scrollIntoView();
+        }
+        history.replaceState(null, "", `#${id}`);
+      });
+    });
+
+  /* Project category filters. */
+  const filterButtons = document.querySelectorAll<HTMLButtonElement>(
+    "[data-filter]"
+  );
+  const projects = document.querySelectorAll<HTMLElement>("[data-cat]");
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const filter = button.dataset.filter ?? "all";
+      filterButtons.forEach((b) =>
+        b.classList.toggle("is-active", b === button)
+      );
+      projects.forEach((project) => {
+        const categories = (project.dataset.cat ?? "").split(/\s+/);
+        const visible =
+          filter === "all" || categories.includes(filter);
+        project.classList.toggle("is-hidden", !visible);
+      });
+      /* Filtering changes page height — keep the scrub accurate. */
+      if (!prefersReducedMotion) ScrollTrigger.refresh();
+    });
+  });
+
+  /* Contact form: compose the email in the user's mail client. */
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    const data = new FormData(form);
+    const subject = encodeURIComponent(
+      `Project enquiry — ${String(data.get("type") ?? "New project")}`
+    );
+    const body = encodeURIComponent(
+      `Name: ${String(data.get("name") ?? "")}\n` +
+        `Email: ${String(data.get("email") ?? "")}\n\n` +
+        `${String(data.get("message") ?? "")}`
+    );
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  });
+}
+
+/* ------------------------------------------------------------------ */
 /* Reduced motion — static first frame only, no animation              */
 /* ------------------------------------------------------------------ */
 
@@ -199,6 +274,7 @@ const prefersReducedMotion =
 async function initReducedMotion(): Promise<void> {
   document.documentElement.classList.add("reduced-motion");
   sizeCanvas();
+  wireUI(null);
   const loaded = await loadFrame(0);
   if (loaded) {
     frameState.frame = 0;
@@ -224,12 +300,14 @@ function initCinematicScroll(): void {
   });
   gsap.ticker.lagSmoothing(0);
 
+  wireUI(lenis);
+
   /* Scroll position → progress → frame number → canvas image.
-     The stage is CSS-sticky, so it covers the viewport for the whole
-     scrub range; the page ends exactly when frame 240 is reached. */
-  gsap.to(frameState, {
-    frame: FRAME_COUNT - 1,
-    ease: "none", // scroll position itself controls the motion
+     The stage is CSS-sticky, so the frames stay behind every glass
+     section; the sequence keeps advancing until the page ends on
+     frame 240. */
+  const tl = gsap.timeline({
+    defaults: { ease: "none" }, // scroll position itself controls the motion
     scrollTrigger: {
       trigger: section,
       start: "top top",
@@ -240,12 +318,20 @@ function initCinematicScroll(): void {
     onUpdate: () => renderFrame(),
   });
 
+  tl.to(frameState, { frame: PHASE_ONE_FRAMES, duration: PHASE_ONE_SHARE }).to(
+    frameState,
+    { frame: FRAME_COUNT - 1, duration: 1 - PHASE_ONE_SHARE }
+  );
+
   /* Paint the very first frame as soon as it is available, then
      progressively load the rest without blocking the page. */
   void preloadFrames(
     () => renderFrame(true),
     () => ScrollTrigger.refresh()
   );
+
+  /* Final layout (fonts, wrapping) may shift heights — refresh once. */
+  window.addEventListener("load", () => ScrollTrigger.refresh());
 
   /* Responsive resize: re-measure and repaint the current frame. */
   window.addEventListener("resize", () => {
